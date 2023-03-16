@@ -1,0 +1,5 @@
+node_modules/
+dep-data/
+sample-data/
+.DS_Store
+bin/
