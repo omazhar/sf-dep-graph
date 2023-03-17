@@ -17,13 +17,13 @@ const arg = require('arg');
         '--outputDir': String
     })
 
-    let connection = {
+    const connection = {
         token: args['--accessToken'],
         url: args['--sbxUrl'],
         apiVersion: '56.0'
     }
 
-    let entryPoint = {
+    const entryPoint = {
         name: args['--objName'],
         type: args['--objType'],
         id: args['--objId'],
@@ -31,16 +31,16 @@ const arg = require('arg');
         usages: []
     }
         
-    let soupApi = sfdcSoup(connection,entryPoint);
+    const soupApi = sfdcSoup(connection,entryPoint);
 
-    let dependencyResponse = await soupApi.getDependencies();
-    let dependencyTree = await dependencyResponse.dependencyTree;
+    const dependencyResponse = await soupApi.getDependencies();
+    const dependencyTree = await dependencyResponse.dependencyTree;
     
-    let usageResponse = await soupApi.getUsage();
-    let usageTree = await usageResponse.usageTree;
+    const usageResponse = await soupApi.getUsage();
+    const usageTree = await usageResponse.usageTree;
 
-    let browser = await initializeBrowser();
-    let browserPage = await getHomePage(browser, connection);
+    const browser = await initializeBrowser();
+    const browserPage = await getHomePage(browser, connection);
 
     if (Object.keys(dependencyTree).length > 0) {
         await processReferences(browserPage, entryPoint, dependencyTree);
@@ -166,15 +166,6 @@ async function initializeBrowser() {
 
     const browser = await puppeteer.launch({
         headless: true,
-        args: [
-            '--disable-notifications', 
-            '--no-sandbox', 
-            '--disable-gpu', 
-            '--disable-dev-shm-usage', 
-            '--start-maximized', 
-            //'--start-fullscreen',
-            '--disable-features=site-per-process'
-        ]
     });
 
     return browser
