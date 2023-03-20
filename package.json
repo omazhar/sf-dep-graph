@@ -1,6 +1,6 @@
 {
   "name": "sf-dep-graph",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generate Neo4j graph of dependencies of Salesforce Metadata",
   "main": "src/get-dependencies-for-object.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "repository": "omazhar/sf-dep-graph",
   "dependencies": {
     "arg": "^5.0.2",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.0",
     "puppeteer": "^19.7.5",
     "sfdc-soup": "^18.4.0"
   }
