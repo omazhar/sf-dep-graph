@@ -28,7 +28,13 @@ const { execSync } = require('node:child_process');
     console.log(`Already processed ${processedObjs.length} objects`)
 
     for (let i = 0; i < inputFiles.length; i++) {
-        if (inputFiles[i].endsWith('.cls') || inputFiles[i].endsWith('.object')) {
+        if (
+            inputFiles[i].endsWith('.cls') || 
+            inputFiles[i].endsWith('.object') || 
+            inputFiles[i].endsWith('.flow') ||
+            inputFiles[i].endsWith('.page') ||
+            inputFiles[i].endsWith('.trigger')
+            ) {
             const objName = inputFiles[i].split('.')[0]
 
             // check if already processed
@@ -79,6 +85,15 @@ function getObjId(args, objName) {
             modObjName = objName
         }
         cmd = `sfdx force:data:soql:query --json -t -u ${args['--sbxUser']} -q "select id from CustomObject where DeveloperName=\'${modObjName}\'"`
+    }
+    else if (args['--objType'] == 'Flow') {
+        cmd = `sfdx force:data:soql:query --json -t -u ${args['--sbxUser']} -q "select id from Flow where FullName=\'${objName}\'"`
+    }
+    else if (args['--objType'] == 'ApexPage') {
+        cmd = `sfdx force:data:soql:query --json -t -u ${args['--sbxUser']} -q "select id from ApexPage where name=\'${objName}\'"`
+    }
+    else if (args['--objType'] == 'ApexTrigger') {
+        cmd = `sfdx force:data:soql:query --json -t -u ${args['--sbxUser']} -q "select id from ApexTrigger where name=\'${objName}\'"`
     }
     const resultJson = execSync(cmd).toString()
     const jsonObj = JSON.parse(resultJson)
