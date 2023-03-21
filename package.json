@@ -1,6 +1,6 @@
 {
   "name": "sf-dep-graph",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Generate Neo4j graph of dependencies of Salesforce Metadata",
   "main": "src/get-dependencies-for-object.js",
   "scripts": {
