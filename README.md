@@ -76,7 +76,7 @@ do
 
     echo "Processing [$counter] of [$total_count]: $cypher_file"
 
-    cat $cypher_file | cypher-shell -u neo4j -p '<neo4j-db-name>'
+    cat $cypher_file | cypher-shell -u neo4j -p '<db-password>'
 
     counter=$[$counter +1]
 
