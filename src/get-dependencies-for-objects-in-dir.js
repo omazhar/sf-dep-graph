@@ -28,7 +28,7 @@ const { execSync } = require('node:child_process');
     console.log(`Already processed ${processedObjs.length} objects`)
 
     for (let i = 0; i < inputFiles.length; i++) {
-        if (inputFiles[i].endsWith('.cls')) {
+        if (inputFiles[i].endsWith('.cls') || inputFiles[i].endsWith('.object')) {
             const objName = inputFiles[i].split('.')[0]
 
             // check if already processed
@@ -66,7 +66,20 @@ function processObj(args, objName) {
 }
 
 function getObjId(args, objName) {
-    const cmd = `sfdx force:data:soql:query --json -t -u ${args['--sbxUser']} -q "select id from ${args['--objType']} where name=\'${objName}\'"`
+    var cmd
+    if (args['--objType'] == 'ApexClass') {
+        cmd = `sfdx force:data:soql:query --json -t -u ${args['--sbxUser']} -q "select id from ApexClass where name=\'${objName}\'"`
+    }
+    else if (args['--objType'] == 'CustomObject') {
+        var modObjName
+        if (objName.endsWith('__c')) {
+            modObjName = objName.split('__c')[0]
+        }
+        else {
+            modObjName = objName
+        }
+        cmd = `sfdx force:data:soql:query --json -t -u ${args['--sbxUser']} -q "select id from CustomObject where DeveloperName=\'${modObjName}\'"`
+    }
     const resultJson = execSync(cmd).toString()
     const jsonObj = JSON.parse(resultJson)
     if (jsonObj.result.records.length > 0) {
