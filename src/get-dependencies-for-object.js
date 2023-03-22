@@ -212,7 +212,7 @@ async function getPackageName(page, objName, objType, objUrl) {
         if (objType === 'CustomField' || objType === 'CustomObject') {
             installedPackageLink = await page.waitForXPath(customFieldInstalledPackageXPath)
         }
-        else if (objType === 'ApexClass') {
+        else if (objType === 'ApexClass' || objType === 'ApexTrigger') {
             installedPackageLink = await page.waitForXPath(apexClassInstalledPackageXPath)
         }
         else {

@@ -86,6 +86,7 @@ done
 # Current Limitations
 - The library can determine if a metadata is part of a package, only for the following metadata:
     - ApexClass
+    - ApexTrigger
     - CustomField
     - CustomObject
 
