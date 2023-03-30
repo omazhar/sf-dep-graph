@@ -8,8 +8,9 @@ The Dependencies and Usages of the metadata are exported in 2 formats:
 - JSON
 - CYPHER Statements for importing into a Neo4J Database
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O5UsiJPFPzs" title="Use the Power of Graph Databases to Visualize and Create Salesforce Unlocked Packages from HappySoup" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[Click here or on the image below to watch how to use this package](https://youtu.be/O5UsiJPFPzs)
 
+[![](yt-thumbnail.png 'Use Graph Database To Migrate Happy Soup To DX')](https://youtu.be/O5UsiJPFPzs)
 
 # Pre-Requisites
 1. Install [NodeJs](https://www.nodejs.org)
