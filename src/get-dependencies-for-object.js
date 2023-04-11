@@ -30,6 +30,12 @@ const arg = require('arg');
         references: [],
         usages: []
     }
+
+    // skip if dependencies for this object have already been exported
+    if (fs.existsSync(`${args['--outputDir']}/${args['--objName']}-references.json`)) {
+        console.log(`Skipping already processed [${args['--objName']}]`)
+        process.exit(0);
+    }
         
     const soupApi = sfdcSoup(connection,entryPoint);
 
