@@ -31,8 +31,10 @@ const arg = require('arg');
         usages: []
     }
 
+    const outputFileName = replaceSlashWithDashes(args['--objName'])
+
     // skip if dependencies for this object have already been exported
-    if (fs.existsSync(`${args['--outputDir']}/${args['--objName']}-references.json`)) {
+    if (fs.existsSync(`${args['--outputDir']}/${outputFileName}-references.json`)) {
         console.log(`Skipping already processed [${args['--objName']}]`)
         process.exit(0);
     }
@@ -58,9 +60,9 @@ const arg = require('arg');
 
     await browser.close();
 
-    exportJSON(entryPoint, args['--outputDir']);
+    exportJSON(entryPoint, args['--outputDir'], outputFileName);
 
-    exportCypher(entryPoint, args['--outputDir']);
+    exportCypher(entryPoint, args['--outputDir'], outputFileName);
 
 })();
 
@@ -251,12 +253,12 @@ function delay(time) {
     });
 }
 
-function exportJSON(entryPoint, outputDir) {
+function exportJSON(entryPoint, outputDir, outputFileName) {
     //console.log(JSON.stringify(entryPoint, null, 2));
-    fs.writeFileSync(`${outputDir}/${entryPoint.name}-references.json`, JSON.stringify(entryPoint, null, 2))
+    fs.writeFileSync(`${outputDir}/${outputFileName}-references.json`, JSON.stringify(entryPoint, null, 2))
 }
 
-function exportCypher(entryPoint, outputDir) {
+function exportCypher(entryPoint, outputDir, outputFileName) {
     
     let cypherStatements = []
     let nodeNames = [];
@@ -312,8 +314,8 @@ function exportCypher(entryPoint, outputDir) {
         
     }
 
-//    console.log(cypherStatements.join('\n'))
-    fs.writeFileSync(`${outputDir}/${entryPoint.name}-references.cypher`, cypherStatements.join('\n'))
+    //    console.log(cypherStatements.join('\n'))
+    fs.writeFileSync(`${outputDir}/${outputFileName}-references.cypher`, cypherStatements.join('\n'))
 
 }
 
@@ -330,6 +332,10 @@ function replaceDotWithUnderscores(someString) {
 function replaceSpaceWithUnderscores(someString) {
     //return someString.replace(/\ /g,'_')
     return someString
+}
+
+function replaceSlashWithDashes(someString) {
+    return someString.replace(/\//g,'-')
 }
 
 function alreadyHasReference(objArray, refName) {
