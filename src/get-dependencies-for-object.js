@@ -97,6 +97,7 @@ async function populateReferencesInEntryPoint(entryPointReferences, browserPage,
         'CustomNotificationType',
         'CustomPermission',
         'EmailTemplate',
+        'Layout',
         'PermissionSet',
         'PermissionSetGroup',
         'PermissionSetLicense',
@@ -132,6 +133,11 @@ async function populateReferencesInEntryPoint(entryPointReferences, browserPage,
     // FSL_Curbside-10
     if (mDataType === 'Flow' && trimmedName.includes('-')) {
         trimmedName = trimmedName.split('-')[0];
+    }
+
+    // replace spaces with underscores
+    if (mDataType === 'Flow' && trimmedName.includes(' ')) {
+        trimmedName = replaceSpaceWithUnderscores(trimmedName);
     }
 
     const packageName = await getPackageName(browserPage, trimmedName, mDataType, mDataUrl);
@@ -310,6 +316,10 @@ function removeDashes(someString) {
 
 function replaceDotWithUnderscores(someString) {
     return someString.replace(/\./g,'__')
+}
+
+function replaceSpaceWithUnderscores(someString) {
+    return someString.replace(/\ /g,'_')
 }
 
 function alreadyHasReference(objArray, refName) {

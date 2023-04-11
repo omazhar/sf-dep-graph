@@ -99,6 +99,7 @@ done
     - CustomNotificationType
     - CustomPermission
     - EmailTemplate
+    - Layout
     - PermissionSet
     - PermissionSetGroup
     - PermissionSetLicense
