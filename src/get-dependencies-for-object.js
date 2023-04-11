@@ -60,7 +60,7 @@ const arg = require('arg');
 
 async function processReferences(browserPage, entryPoint, dependencyTree) {
 
-    console.log(`Getting dependencies for ${entryPoint.name}...`)
+    console.log(`Getting dependencies for [${entryPoint.name}]...`)
 
     const rootKey = Object.keys(dependencyTree)[0];
 
@@ -77,7 +77,7 @@ async function processReferences(browserPage, entryPoint, dependencyTree) {
 
 async function processUsages(browserPage, entryPoint, usageTree) {
 
-    console.log(`Getting usages of ${entryPoint.name}...`)
+    console.log(`Getting usages of [${entryPoint.name}]...`)
 
     const mTypes = Object.keys(usageTree);
 
@@ -97,6 +97,7 @@ async function populateReferencesInEntryPoint(entryPointReferences, browserPage,
         'CustomNotificationType',
         'CustomPermission',
         'EmailTemplate',
+        'FlowInterview',
         'Layout',
         'PermissionSet',
         'PermissionSetGroup',
