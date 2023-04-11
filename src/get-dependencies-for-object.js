@@ -143,7 +143,7 @@ async function populateReferencesInEntryPoint(entryPointReferences, browserPage,
     const packageName = await getPackageName(browserPage, trimmedName, mDataType, mDataUrl);
 
     if (packageName != null) {
-        console.log(`Found ${mDataName} in package ${packageName}`)
+        console.log(`Found [${mDataName}] in package [${packageName}]`)
         if (!alreadyHasReference(entryPointReferences, packageName)) {
             entryPointReferences.push({
                 name: packageName,
@@ -155,7 +155,7 @@ async function populateReferencesInEntryPoint(entryPointReferences, browserPage,
         }
     }
     else {
-        console.log(`Found reference to ${mDataType} ${trimmedName}`)
+        console.log(`Found reference to ${mDataType} [${trimmedName}]`)
         if (!alreadyHasReference(entryPointReferences, trimmedName)) {
             entryPointReferences.push({
                 name: trimmedName,
@@ -259,7 +259,7 @@ function exportCypher(entryPoint, outputDir) {
     const rootNodeType = entryPoint.type
     const rootNodeId = entryPoint.id
 
-    cypherStatements.push(`MERGE (${rootNodeName}:${rootNodeType} {name: '${rootNodeName}', id: '${rootNodeId}'})`)
+    cypherStatements.push(`MERGE (\`${rootNodeName}\`:${rootNodeType} {name: '${rootNodeName}', id: '${rootNodeId}'})`)
     cypherStatements.push(``)
 
     // references
@@ -274,16 +274,16 @@ function exportCypher(entryPoint, outputDir) {
         const nodeRef = references[i].ref
 
         if (!nodeNames.includes(nodeName)) {
-            cypherStatements.push(`MERGE (${nodeName}:${nodeType} {name: '${nodeName}', id: '${nodeId}'})`)
+            cypherStatements.push(`MERGE (\`${nodeName}\`:${nodeType} {name: '${nodeName}', id: '${nodeId}'})`)
             nodeNames.push(nodeName);
         }
 
         if (nodeRef) {
-            cypherStatements.push(`MERGE (${rootNodeName})-[:REFERENCES {name: '${nodeRef}'}]->(${nodeName})`)
+            cypherStatements.push(`MERGE (\`${rootNodeName}\`)-[:REFERENCES {name: '${nodeRef}'}]->(\`${nodeName}\`)`)
 
         }
         else {
-            cypherStatements.push(`MERGE (${rootNodeName})-[:REFERENCES]->(${nodeName})`)
+            cypherStatements.push(`MERGE (\`${rootNodeName}\`)-[:REFERENCES]->(\`${nodeName}\`)`)
         }
         cypherStatements.push(``)
         
@@ -297,10 +297,10 @@ function exportCypher(entryPoint, outputDir) {
         const nodeId = usages[i].id
 
         if (!nodeNames.includes(nodeName)) {
-            cypherStatements.push(`MERGE (${nodeName}:${nodeType} {name: '${nodeName}', id: '${nodeId}'})`)
+            cypherStatements.push(`MERGE (\`${nodeName}\`:${nodeType} {name: '${nodeName}', id: '${nodeId}'})`)
             nodeNames.push(nodeName);
         }
-        cypherStatements.push(`MERGE (${rootNodeName})<-[:REFERENCES]-(${nodeName})`)
+        cypherStatements.push(`MERGE (\`${rootNodeName}\`)<-[:REFERENCES]-(\`${nodeName}\`)`)
         cypherStatements.push(``)
         
     }
@@ -311,15 +311,18 @@ function exportCypher(entryPoint, outputDir) {
 }
 
 function removeDashes(someString) {
-    return someString.replace(/-/g,'')
+    //return someString.replace(/-/g,'')
+    return someString
 }
 
 function replaceDotWithUnderscores(someString) {
-    return someString.replace(/\./g,'__')
+    //return someString.replace(/\./g,'__')
+    return someString
 }
 
 function replaceSpaceWithUnderscores(someString) {
-    return someString.replace(/\ /g,'_')
+    //return someString.replace(/\ /g,'_')
+    return someString
 }
 
 function alreadyHasReference(objArray, refName) {
